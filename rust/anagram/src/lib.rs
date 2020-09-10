@@ -25,7 +25,7 @@ pub fn anagrams_for<'a>(word: &str, possible_anagrams: &'a[&str]) -> HashSet<&'a
     let word_anagram = Anagram::new(word);
 
     for possible in possible_anagrams {
-        if possible.len() != word.len() {
+        if possible.len() != word.len() || *possible.to_lowercase() == word.to_lowercase() {
             continue;
         }
 
