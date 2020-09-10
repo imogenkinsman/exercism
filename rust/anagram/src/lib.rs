@@ -1,16 +1,18 @@
 use std::collections::{HashSet, HashMap};
 #[derive(PartialEq)]
 struct Anagram {
-    chars: HashMap<char, u16>,
+    chars: HashMap<String, u16>,
 }
 
 impl Anagram {
     pub fn new(str: &str) -> Self {
-        let mut chars: HashMap<char, u16> = HashMap::new();
+        let mut chars: HashMap<String, u16> = HashMap::new();
 
         for c in str.chars() {
-            let char = chars.entry(c).or_insert(0);
-            *char += 1;
+            let lowercase : String = c.to_lowercase().collect();
+
+            let entry = chars.entry(lowercase).or_insert(0);
+            *entry += 1;
         }
 
         Anagram {chars: chars}

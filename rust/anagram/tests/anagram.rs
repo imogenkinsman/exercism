@@ -85,7 +85,6 @@ fn test_multiple_anagrams() {
 }
 
 #[test]
-#[ignore]
 fn test_case_insensitive_anagrams() {
     let word = "Orchestra";
 
@@ -110,7 +109,6 @@ fn test_unicode_anagrams() {
 }
 
 #[test]
-#[ignore]
 fn test_misleading_unicode_anagrams() {
     // Despite what a human might think these words different letters, the input uses Greek A and B
     // while the list of potential anagrams uses Latin A and B.
