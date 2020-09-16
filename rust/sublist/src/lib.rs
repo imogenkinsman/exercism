@@ -6,12 +6,11 @@ pub enum Comparison {
     Unequal,
 }
 
-fn includes<T: PartialEq>(first: &[T], second: &[T]) -> bool {
-    for (i, _) in first.iter().enumerate() {
-        if second.len() + i > first.len() {
+fn is_sublist<T: PartialEq>(a: &[T], b: &[T]) -> bool {
+    for (i, _) in b.iter().enumerate() {
+        if a.len() + i > b.len() {
             return false;
-        }
-        if &first[i..(second.len() + i)] == second {
+        } else if &b[i..(a.len() + i)] == a {
             return true;
         }
     }
@@ -24,8 +23,8 @@ pub fn sublist<T: PartialEq>(_first_list: &[T], _second_list: &[T]) -> Compariso
         (x, y) if x == y => Comparison::Equal,
         (x, _) if x.len() == 0 => Comparison::Sublist,
         (y, _) if y.len() == 0 => Comparison::Superlist,
-        (x, y) if includes(x, y) => Comparison::Superlist,
-        (x, y) if includes(y, x) => Comparison::Sublist,
+        (x, y) if is_sublist(x, y) => Comparison::Sublist,
+        (x, y) if is_sublist(y, x) => Comparison::Superlist,
         _ => Comparison::Unequal,
     }
 }
