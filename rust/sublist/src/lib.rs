@@ -6,32 +6,26 @@ pub enum Comparison {
     Unequal,
 }
 
+fn includes<T: PartialEq>(first: &[T], second: &[T]) -> bool {
+    for (i, _) in first.iter().enumerate() {
+        if second.len() + i > first.len() {
+            return false;
+        }
+        if &first[i..(second.len() + i)] == second {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 pub fn sublist<T: PartialEq>(_first_list: &[T], _second_list: &[T]) -> Comparison {
-    if _first_list == _second_list {
-        return Comparison::Equal;
-    } else if _first_list.len() == 0 {
-        return Comparison::Sublist;
-    } else if _second_list.len() == 0 {
-        return Comparison::Superlist;
+    match (_first_list, _second_list) {
+        (x, y) if x == y => Comparison::Equal,
+        (x, _) if x.len() == 0 => Comparison::Sublist,
+        (y, _) if y.len() == 0 => Comparison::Superlist,
+        (x, y) if includes(x, y) => Comparison::Superlist,
+        (x, y) if includes(y, x) => Comparison::Sublist,
+        _ => Comparison::Unequal,
     }
-
-    for (i, item) in _first_list.iter().enumerate() {
-        if _second_list.len() + i > _first_list.len() {
-            break;
-        }
-        if &_first_list[i..(_second_list.len() + i)] == _second_list {
-            return Comparison::Superlist;
-        }
-    }
-
-    for (i, item) in _second_list.iter().enumerate() {
-        if _first_list.len() + i > _second_list.len() {
-            break;
-        }
-        if &_second_list[i..(_first_list.len() + i)] == _first_list {
-            return Comparison::Sublist;
-        }
-    }
-
-    Comparison::Unequal
 }
