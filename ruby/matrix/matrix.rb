@@ -16,16 +16,7 @@ class Matrix
       @rows.push(line.split(" ").map(&:to_i))
     end
 
-    @columns = if @rows.empty?
-      []
-    else
-      Array.new(@rows.first.count) { Array.new }
-    end
-
-    @rows.each do |row|
-      row.each_with_index do |x, i|
-        @columns[i].push(x)
-      end
-    end
+    head, *tail = @rows
+    @columns = head.zip(*tail)
   end
 end
