@@ -16,7 +16,7 @@ class Matrix
       @rows.push(line.split(" ").map(&:to_i))
     end
 
-    head, *tail = @rows
+    head, *tail = rows
     @columns = head.zip(*tail)
   end
 end
